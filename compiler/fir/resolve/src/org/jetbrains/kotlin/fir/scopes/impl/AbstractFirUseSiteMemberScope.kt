@@ -20,7 +20,7 @@ abstract class AbstractFirUseSiteMemberScope(
 
     private val functions = hashMapOf<Name, Collection<FirNamedFunctionSymbol>>()
     val directOverriddenFunctions = hashMapOf<FirNamedFunctionSymbol, Collection<FirNamedFunctionSymbol>>()
-    protected val directOverriddenProperties = hashMapOf<FirPropertySymbol, MutableList<FirPropertySymbol>>()
+    val directOverriddenProperties = hashMapOf<FirPropertySymbol, MutableList<FirPropertySymbol>>()
 
     private val callableNamesCached by lazy(LazyThreadSafetyMode.PUBLICATION) {
         declaredMemberScope.getContainingCallableNamesIfPresent() + superTypesScope.getCallableNames()
