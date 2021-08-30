@@ -28,7 +28,8 @@ object JvmDeclarationCheckers : DeclarationCheckers() {
     override val propertyCheckers: Set<FirPropertyChecker>
         get() = setOf(
             FirVolatileAnnotationChecker,
-            FirJvmFieldApplicabilityChecker
+            FirJvmFieldApplicabilityChecker,
+            FirJvmSyntheticApplicabilityChecker
         )
 
     override val functionCheckers: Set<FirFunctionChecker>
