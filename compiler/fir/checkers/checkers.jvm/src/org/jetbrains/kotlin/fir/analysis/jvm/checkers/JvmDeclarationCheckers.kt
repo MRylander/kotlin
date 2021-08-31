@@ -15,6 +15,11 @@ object JvmDeclarationCheckers : DeclarationCheckers() {
             FirJvmDefaultChecker
         )
 
+    override val annotatedDeclarationCheckers: Set<FirAnnotatedDeclarationChecker>
+        get() = setOf(
+            FirRepeatableAnnotationChecker
+        )
+
     override val classCheckers: Set<FirClassChecker>
         get() = setOf(
             FirStrictfpApplicabilityChecker,
