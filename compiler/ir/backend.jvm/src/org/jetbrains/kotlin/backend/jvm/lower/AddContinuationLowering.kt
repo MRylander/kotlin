@@ -12,6 +12,7 @@ import org.jetbrains.kotlin.backend.common.lower.createIrBuilder
 import org.jetbrains.kotlin.backend.common.phaser.makeIrFilePhase
 import org.jetbrains.kotlin.backend.jvm.JvmBackendContext
 import org.jetbrains.kotlin.backend.jvm.JvmLoweredDeclarationOrigin
+import org.jetbrains.kotlin.backend.jvm.JvmLoweredStatementOrigin
 import org.jetbrains.kotlin.backend.jvm.codegen.continuationParameter
 import org.jetbrains.kotlin.backend.jvm.codegen.hasContinuation
 import org.jetbrains.kotlin.backend.jvm.codegen.isInvokeSuspendOfContinuation
@@ -472,20 +473,19 @@ private fun <T : IrMemberAccessExpression<IrFunctionSymbol>> T.retargetToSuspend
         it.copyTypeArgumentsFrom(this)
         it.dispatchReceiver = dispatchReceiver
         it.extensionReceiver = extensionReceiver
-        val continuationIndex = view.continuationParameter()!!.index
+        val continuationParameter = view.continuationParameter()!!
         for (i in 0 until valueArgumentsCount) {
-            it.putValueArgument(i + if (i >= continuationIndex) 1 else 0, getValueArgument(i))
+            it.putValueArgument(i + if (i >= continuationParameter.index) 1 else 0, getValueArgument(i))
         }
         if (caller != null) {
-            // At this point the only LOCAL_FUNCTION_FOR_LAMBDAs are inline and crossinline lambdas.
-            val continuation = if (caller.originalFunction.origin == IrDeclarationOrigin.LOCAL_FUNCTION_FOR_LAMBDA)
-                context.fakeContinuation
+            val continuation = if (caller.origin == JvmLoweredDeclarationOrigin.INLINE_LAMBDA)
+                IrCompositeImpl(UNDEFINED_OFFSET, UNDEFINED_OFFSET, continuationParameter.type, JvmLoweredStatementOrigin.FAKE_CONTINUATION)
             else
                 IrGetValueImpl(
                     UNDEFINED_OFFSET, UNDEFINED_OFFSET, caller.continuationParameter()?.symbol
                         ?: throw AssertionError("${caller.render()} has no continuation; can't call ${owner.render()}")
                 )
-            it.putValueArgument(continuationIndex, continuation)
+            it.putValueArgument(continuationParameter.index, continuation)
         }
     }
 }
