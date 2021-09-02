@@ -3,6 +3,7 @@
 // INFER_MAIN_MODULE
 // SKIP_MINIFICATION
 // SKIP_NODE_JS
+// SKIP_DCE_DRIVEN
 
 // MODULE: exportProtectedMembers
 // FILE: lib.kt
