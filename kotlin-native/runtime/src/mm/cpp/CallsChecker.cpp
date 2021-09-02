@@ -256,10 +256,12 @@ extern "C" const char* Kotlin_callsCheckerGoodFunctionNames[] = {
         "SetConsoleCP",
         "QueryPerformanceCounter",
         "VirtualAlloc",
+        "VirtualFree"
         "FlsSetValue",
         "GetCurrentProcess",
         "FlsFree",
         "K32GetProcessMemoryInfo",
+        "madvise",
 };
 
 namespace {
