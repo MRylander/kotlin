@@ -189,8 +189,8 @@ class KonanConfig(val project: Project, val configuration: CompilerConfiguration
             if (target.supportsMimallocAllocator()) {
                 true
             } else {
-                configuration.report(CompilerMessageSeverity.STRONG_WARNING,
-                        "Mimalloc allocator isn't supported on target ${target.name}. Used standard mode.")
+                /*configuration.report(CompilerMessageSeverity.STRONG_WARNING,
+                        "Mimalloc allocator isn't supported on target ${target.name}. Used standard mode.")*/
                 false
             }
         } else {
