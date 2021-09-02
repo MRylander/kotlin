@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.fir.declarations.FirResolvePhase
 import org.jetbrains.kotlin.fir.expressions.*
 import org.jetbrains.kotlin.fir.references.FirResolvedNamedReference
 import org.jetbrains.kotlin.fir.resolve.fullyExpandedType
+import org.jetbrains.kotlin.fir.resolve.toFirRegularClass
 import org.jetbrains.kotlin.fir.resolve.toSymbol
 import org.jetbrains.kotlin.fir.symbols.SymbolInternals
 import org.jetbrains.kotlin.fir.symbols.ensureResolved
@@ -24,8 +25,10 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
 import org.jetbrains.kotlin.fir.types.ConeClassLikeType
 import org.jetbrains.kotlin.fir.types.FirErrorTypeRef
 import org.jetbrains.kotlin.fir.types.coneType
+import org.jetbrains.kotlin.fir.types.coneTypeSafe
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
+import org.jetbrains.kotlin.resolve.checkers.OptInNames
 
 private val RETENTION_PARAMETER_NAME = Name.identifier("value")
 private val TARGET_PARAMETER_NAME = Name.identifier("allowedTargets")
@@ -59,6 +62,15 @@ fun FirAnnotationCall.getAllowedAnnotationTargets(session: FirSession): Set<Kotl
     annotationClassSymbol.ensureResolved(FirResolvePhase.BODY_RESOLVE)
     val annotationClass = annotationClassSymbol.fir as? FirRegularClass
     return annotationClass?.getAllowedAnnotationTargets() ?: defaultAnnotationTargets
+}
+
+internal fun FirAnnotationCall.getAnnotationClassForOptInMarker(session: FirSession): FirRegularClass? {
+    val lookupTag = annotationTypeRef.coneTypeSafe<ConeClassLikeType>()?.lookupTag ?: return null
+    val annotationClass = lookupTag.toFirRegularClass(session) ?: return null
+    if (annotationClass.getAnnotationByClassId(OptInNames.REQUIRES_OPT_IN_CLASS_ID) == null) {
+        return null
+    }
+    return annotationClass
 }
 
 fun FirRegularClass.getAllowedAnnotationTargets(): Set<KotlinTarget> {
