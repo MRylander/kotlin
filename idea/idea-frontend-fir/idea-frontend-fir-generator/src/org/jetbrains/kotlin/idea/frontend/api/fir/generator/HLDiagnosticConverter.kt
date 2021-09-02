@@ -27,6 +27,7 @@ import org.jetbrains.kotlin.idea.frontend.api.symbols.*
 import org.jetbrains.kotlin.idea.frontend.api.types.KtType
 import org.jetbrains.kotlin.lexer.KtKeywordToken
 import org.jetbrains.kotlin.lexer.KtModifierKeywordToken
+import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.KtExpression
@@ -334,6 +335,7 @@ private object FirToKtConversionCreator {
         LanguageVersionSettings::class,
         Variance::class,
         FqName::class,
+        ClassId::class,
         FirModuleData::class,
         ExpectActualCompatibility.Incompatible::class,
     )
