@@ -47,7 +47,6 @@ import org.jetbrains.kotlin.fir.visitors.FirDefaultTransformer
 import org.jetbrains.kotlin.fir.visitors.FirTransformer
 import org.jetbrains.kotlin.fir.visitors.transformSingle
 import org.jetbrains.kotlin.name.Name
-import org.jetbrains.kotlin.name.SpecialNames
 
 open class FirDeclarationsResolveTransformer(transformer: FirBodyResolveTransformer) : FirPartialBodyResolveTransformer(transformer) {
     private val statusResolver: FirStatusResolver = FirStatusResolver(session, scopeSession)
@@ -230,8 +229,9 @@ open class FirDeclarationsResolveTransformer(transformer: FirBodyResolveTransfor
             completedCalls.forEach {
                 it.transformSingle(callCompletionResultsWriter, null)
             }
-            val declarationCompletionResultsWriter = FirDeclarationCompletionResultsWriter(finalSubstitutor)
-            property.transformSingle(declarationCompletionResultsWriter, null)
+            val declarationCompletionResultsWriter =
+                FirDeclarationCompletionResultsWriter(finalSubstitutor, inferenceComponents.approximator, session.typeContext)
+            property.transformSingle(declarationCompletionResultsWriter, FirDeclarationCompletionResultsWriter.ApproximationData.Default)
         }
     }
 
