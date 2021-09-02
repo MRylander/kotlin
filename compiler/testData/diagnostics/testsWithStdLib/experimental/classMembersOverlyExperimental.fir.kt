@@ -1,4 +1,3 @@
-// FIR_IDENTICAL
 // !USE_EXPERIMENTAL: kotlin.RequiresOptIn
 // FILE: api.kt
 
@@ -31,8 +30,8 @@ package usage
 import api.*
 
 fun use() {
-    val c: <!OPT_IN_USAGE!>C<!> = C()
-    <!OPT_IN_USAGE!>c<!>.<!OPT_IN_USAGE!>function<!>()
-    <!OPT_IN_USAGE!>c<!>.<!OPT_IN_USAGE!>property<!>
-    <!OPT_IN_USAGE!>C<!>.Nested().<!OPT_IN_USAGE!>nestedFunction<!>()
+    val c: <!EXPERIMENTAL_API_USAGE!>C<!> = C()
+    <!EXPERIMENTAL_API_USAGE!>c<!>.<!EXPERIMENTAL_API_USAGE!>function<!>()
+    <!EXPERIMENTAL_API_USAGE!>c<!>.<!EXPERIMENTAL_API_USAGE!>property<!>
+    <!EXPERIMENTAL_API_USAGE!>C<!>.Nested().<!EXPERIMENTAL_API_USAGE!>nestedFunction<!>()
 }

@@ -119,13 +119,9 @@ object FirOptInUsageBaseChecker {
                     }
                 }
             }
-            parentClassSymbol?.loadExperimentalities(context, result, visited, fromSetter = false)
             if (fromSetter && this is FirPropertySymbol) {
                 setterSymbol?.loadExperimentalities(context, result, visited, fromSetter = false)
             }
-        } else if (this is FirRegularClassSymbol && fir is FirRegularClass && !fir.isLocal) {
-            val parentClassSymbol = outerClassSymbol(context)
-            parentClassSymbol?.loadExperimentalities(context, result, visited, fromSetter = false)
         }
 
         for (annotation in fir.annotations) {

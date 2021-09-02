@@ -1,4 +1,3 @@
-// FIR_IDENTICAL
 // !USE_EXPERIMENTAL: kotlin.RequiresOptIn
 // FILE: api.kt
 
@@ -81,10 +80,10 @@ package usage3
 import api.*
 
 fun use() {
-    val c: <!OPT_IN_USAGE!>C<!> = C()
-    <!OPT_IN_USAGE!>c<!>.function()
-    <!OPT_IN_USAGE!>c<!>.property
-    <!OPT_IN_USAGE!>C<!>.Nested()
-    <!OPT_IN_USAGE!>c<!>.Inner()
-    <!OPT_IN_USAGE!>c<!>.<!OPT_IN_USAGE!>extension<!>()
+    val c: <!EXPERIMENTAL_API_USAGE!>C<!> = C()
+    <!EXPERIMENTAL_API_USAGE!>c<!>.function()
+    <!EXPERIMENTAL_API_USAGE!>c<!>.property
+    <!EXPERIMENTAL_API_USAGE!>C<!>.Nested()
+    <!EXPERIMENTAL_API_USAGE!>c<!>.Inner()
+    <!EXPERIMENTAL_API_USAGE!>c<!>.<!EXPERIMENTAL_API_USAGE!>extension<!>()
 }
