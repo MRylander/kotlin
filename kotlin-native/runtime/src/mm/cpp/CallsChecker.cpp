@@ -256,11 +256,11 @@ extern "C" const char* Kotlin_callsCheckerGoodFunctionNames[] = {
         "SetConsoleCP",
         "QueryPerformanceCounter",
         "VirtualAlloc",
-        "VirtualFree"
         "FlsSetValue",
         "GetCurrentProcess",
         "FlsFree",
         "K32GetProcessMemoryInfo",
+        "VirtualFree",
         "madvise",
 };
 
