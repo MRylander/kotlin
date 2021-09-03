@@ -4785,6 +4785,11 @@ public class IrCodegenBoxWasmTestGenerated extends AbstractIrCodegenBoxWasmTest 
                     runTest("compiler/testData/codegen/box/diagnostics/functions/tailRecursion/tailCallInParentheses.kt");
                 }
 
+                @TestMetadata("tailrecWithExplicitObjectDispatcher.kt")
+                public void testTailrecWithExplicitObjectDispatcher() throws Exception {
+                    runTest("compiler/testData/codegen/box/diagnostics/functions/tailRecursion/tailrecWithExplicitObjectDispatcher.kt");
+                }
+
                 @TestMetadata("whenWithIs.kt")
                 public void testWhenWithIs() throws Exception {
                     runTest("compiler/testData/codegen/box/diagnostics/functions/tailRecursion/whenWithIs.kt");

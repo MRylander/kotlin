@@ -16,11 +16,13 @@
 
 package org.jetbrains.kotlin.backend.common
 
+import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrFunction
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.expressions.*
+import org.jetbrains.kotlin.ir.types.IrSimpleType
 import org.jetbrains.kotlin.ir.types.isUnit
 import org.jetbrains.kotlin.ir.util.usesDefaultArguments
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitor
@@ -107,6 +109,16 @@ fun collectTailRecursionCalls(irFunction: IrFunction): Set<IrCall> {
                 // Overridden functions using default arguments at tail call are not included: KT-4285
                 return
             }
+            val dispatchReceiverType = irFunction.dispatchReceiverParameter?.type
+            if (dispatchReceiverType is IrSimpleType) {
+                val classifier = dispatchReceiverType.classifier.owner as? IrClass
+                // Dispatch receiver type is singleton and hence it can't be changed and the call must be tailrec.
+                if (classifier?.kind?.isSingleton == true) {
+                    result.add(expression)
+                    return
+                }
+            }
+
 
             expression.dispatchReceiver?.let {
                 if (it !is IrGetValue || it.symbol.owner != irFunction.dispatchReceiverParameter) {
