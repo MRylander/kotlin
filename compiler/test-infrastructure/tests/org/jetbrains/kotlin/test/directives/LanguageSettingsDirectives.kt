@@ -28,7 +28,7 @@ object LanguageSettingsDirectives : SimpleDirectivesContainer() {
     // --------------------- Analysis Flags ---------------------
 
     val OPT_IN by stringDirective(
-        description = "List of opted in annotations (AnalysisFlags.useExperimental)"
+        description = "List of opted in annotations (AnalysisFlags.optIn)"
     )
 
     val EXPERIMENTAL by stringDirective(
