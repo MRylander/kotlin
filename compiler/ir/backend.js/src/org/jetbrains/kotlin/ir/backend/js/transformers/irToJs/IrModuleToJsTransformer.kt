@@ -401,7 +401,15 @@ class IrModuleToJsTransformer(
                     else
                         JsNameRef(jsQualifier, internalName.makeRef())
             } else {
-                qualifiedReference = JsNameRef(jsQualifier!!, JsNameRef(Namer.GLOBAL_OBJECT_NAME))
+                // In order to avoid name clashes in @JsQualifier, make sure the qualifier is prefixed with the global object.
+                // See KT-42039
+                qualifiedReference =
+                    if (jsQualifier!!.startsWith("${Namer.GLOBAL_OBJECT_NAME}.") ||
+                        jsQualifier.startsWith("${Namer.IMPLICIT_RECEIVER_NAME}.")) {
+                        JsNameRef(jsQualifier)
+                    } else {
+                        JsNameRef(jsQualifier, JsNameRef(Namer.GLOBAL_OBJECT_NAME))
+                    }
             }
 
             file.declarations
