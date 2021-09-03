@@ -5467,6 +5467,11 @@ public class IrBoxJsES6TestGenerated extends AbstractIrBoxJsES6Test {
             runTest("js/js.translator/testData/box/jsQualifier/interfaces.kt");
         }
 
+        @TestMetadata("nameClash.kt")
+        public void testNameClash() throws Exception {
+            runTest("js/js.translator/testData/box/jsQualifier/nameClash.kt");
+        }
+
         @TestMetadata("simple.kt")
         public void testSimple() throws Exception {
             runTest("js/js.translator/testData/box/jsQualifier/simple.kt");

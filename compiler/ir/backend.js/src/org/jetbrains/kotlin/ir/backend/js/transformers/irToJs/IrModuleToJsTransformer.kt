@@ -401,7 +401,7 @@ class IrModuleToJsTransformer(
                     else
                         JsNameRef(jsQualifier, internalName.makeRef())
             } else {
-                qualifiedReference = JsNameRef(jsQualifier!!)
+                qualifiedReference = JsNameRef(jsQualifier!!, JsNameRef(Namer.GLOBAL_OBJECT_NAME))
             }
 
             file.declarations

@@ -19,6 +19,7 @@ object Namer {
     val DELEGATE = "\$delegate"
 
     val IMPLICIT_RECEIVER_NAME = "this"
+    val GLOBAL_OBJECT_NAME = "globalThis"
 
     val PROTOTYPE_NAME = "prototype"
     val CONSTRUCTOR_NAME = "constructor"
